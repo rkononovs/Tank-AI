@@ -1,5 +1,4 @@
 ﻿
-using NUnit.Framework;
 using System.Collections.Generic;
 
 namespace RGLM
@@ -10,7 +9,6 @@ namespace RGLM
         {
             GetRules.Add(rule);
         }
-
         public List<Rule> GetRules { get; } = new List<Rule>();
     }
 }

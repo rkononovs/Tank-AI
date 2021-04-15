@@ -7,9 +7,9 @@ namespace RGLM
 {
     public class RoamState : BaseState
     {
-        private AITank aiTank;
+        private RGLMTank aiTank;
 
-        public RoamState(AITank aiTank)
+        public RoamState(RGLMTank aiTank)
         {
             this.aiTank = aiTank;
         }

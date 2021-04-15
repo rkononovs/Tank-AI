@@ -5,9 +5,9 @@ namespace RGLM
 {
     public class RunState : BaseState
     {
-        private AITank aiTank;
+        private RGLMTank aiTank;
 
-        public RunState(AITank aiTank)
+        public RunState(RGLMTank aiTank)
         {
             this.aiTank = aiTank;
         }

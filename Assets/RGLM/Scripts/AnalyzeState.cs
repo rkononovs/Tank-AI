@@ -1,19 +1,21 @@
 ﻿
 using System;
 
+
 namespace RGLM
 {
     public class AnalyzeState : BaseState
     {
-        private AITank aiTank;
+        private RGLMTank aiTank;
 
-        public AnalyzeState(AITank aiTank)
+        public AnalyzeState(RGLMTank aiTank)
         {
             this.aiTank = aiTank;
         }
 
         public override Type StateEnter()
         {
+            //aiTank.StartTank();
             return null;
         }
 
