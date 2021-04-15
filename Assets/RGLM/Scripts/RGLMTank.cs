@@ -47,6 +47,9 @@ namespace RGLM
         *******************************************************************************************************/
         public override void AITankUpdate()
         {
+            targetTanksFound = GetAllTargetTanksFound;
+            consumablesFound = GetAllConsumablesFound;
+            basesFound = GetAllBasesFound;
         }
 
         /*******************************************************************************************************       
