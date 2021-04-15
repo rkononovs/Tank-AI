@@ -27,7 +27,7 @@ namespace RGLM
 
         public override Type StateUpdate()
         {
-            return typeof(RoamState);
+            return typeof(AnalyzeState);
         }
     }
 }

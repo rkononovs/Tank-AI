@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace RGLM
 {
@@ -17,10 +18,12 @@ namespace RGLM
         public GameObject consumablePosition;
         public GameObject basePosition;
 
+        public GameObject lookAtPosition;
+        public Vector3[] pointsColection = new Vector3[30];
+
         float t;
 
         bool lowHealth;
-
 
         public BTAction healthCheck;
         public BTAction ammoCheck;
@@ -58,6 +61,40 @@ namespace RGLM
         public override void AIOnCollisionEnter(Collision collision)
         {
         }
+
+
+        //New methods section
+        public void Calculate360Points()
+        {
+            float nextAngle = -77;
+            float temp = 360 / 30 ;
+
+            for (int i = 0; i<30; i++)
+            {
+                float x = transform.position.x + Mathf.Cos(nextAngle * ((float)Math.PI / 180)) * 50;
+                float z = transform.position.x + Mathf.Sin(nextAngle * ((float)Math.PI / 180)) * 50;
+                float y = transform.position.y;
+                pointsColection[i] = new Vector3(x, y, z);
+                nextAngle += temp;
+            }
+
+        }
+
+        public void Rotate360()
+        {
+            Calculate360Points();
+            StartCoroutine("MoveSightAndWait");
+        }
+
+        IEnumerator MoveSightAndWait()
+        {
+            for(int i = 0; i<30; i++)
+            {
+                yield return new WaitForSeconds(0.15f);
+                lookAtPosition.transform.position = pointsColection[i];
+            }
+        }
+
 
         //State Machine Section
         void InitializeStateMachine()

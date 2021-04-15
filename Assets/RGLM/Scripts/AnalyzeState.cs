@@ -15,7 +15,7 @@ namespace RGLM
 
         public override Type StateEnter()
         {
-            //aiTank.StartTank();
+            aiTank.Rotate360();
             return null;
         }
 
@@ -27,6 +27,7 @@ namespace RGLM
 
         public override Type StateUpdate()
         {
+            aiTank.TankFaceTurretToPoint(aiTank.lookAtPosition.transform.position);
             return null;
         }
     }
