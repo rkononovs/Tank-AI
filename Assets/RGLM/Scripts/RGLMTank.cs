@@ -18,12 +18,19 @@ namespace RGLM
 
         float t;
 
+        bool lowHealth;
+
+        public Dictionary<string, bool> stats = new Dictionary<string, bool>();
+        public Rules rules = new Rules();
+
+
         /*******************************************************************************************************      
         WARNING, do not include void Start(), use AITankStart() instead if you want to use Start method from Monobehaviour.
         *******************************************************************************************************/
         public override void AITankStart()
         {
             InitializeStateMachine();
+            InitializeRuleBasedSystem();
         }
 
         /*******************************************************************************************************       
@@ -47,6 +54,20 @@ namespace RGLM
             states.Add(typeof(RunState), new RunState(this));
             states.Add(typeof(AnalyzeState), new AnalyzeState(this));
             GetComponent<StateMachine>().SetStates(states);
+        }
+
+        void InitializeRuleBasedSystem()
+        {
+            stats.Add("lowHealth", lowHealth);
+            stats.Add("targetSpotted", false);
+            stats.Add("targetReached", false);
+            stats.Add("fleeState", false);
+            stats.Add("searchState", false);
+            stats.Add("attackState", false);
+
+            rules.AddRule(new Rule("attackState", "lowHealth", typeof(RoamState), Rule.Predicate.And));
+            rules.AddRule(new Rule("attackState", "lowHealth", typeof(RoamState), Rule.Predicate.And));
+
         }
     }
 }
