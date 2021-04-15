@@ -60,6 +60,7 @@ namespace RGLM
         void InitializeStateMachine()
         {
             Dictionary<Type, BaseState> states = new Dictionary<Type, BaseState>();
+            states.Add(typeof(DefaultState), new DefaultState(this));
             states.Add(typeof(RoamState), new RoamState(this));
             states.Add(typeof(RunState), new RunState(this));
             states.Add(typeof(AnalyzeState), new AnalyzeState(this));
@@ -110,94 +111,94 @@ namespace RGLM
             throw new NotImplementedException();
         }
 
-        
+
 
         //Making use of protected AITank methods
-        public new bool IsFiring()
+        public bool TankIsFiring()
         {
-            return IsFiring();
+            return IsFiring;
         }
 
-        public new bool IsDestroyed()
+        public bool TankIsDestroyed()
         {
-            return IsDestroyed();
+            return IsDestroyed;
         }
 
-        public new float GetHealthLevel()
+        public float TankGetHealthLevel()
         {
-            return GetHealthLevel();
+            return GetHealthLevel;
         }
 
-        public new float GetAmmoLevel()
+        public float TankGetAmmoLevel()
         {
-            return GetAmmoLevel();
+            return GetAmmoLevel;
         }
 
-        public new float GetFuelLevel()
+        public float TankGetFuelLevel()
         {
-            return GetFuelLevel();
+            return GetFuelLevel;
         }
 
-        public new List<GameObject> GetMyBases()
+        public List<GameObject> TankGetMyBases()
         {
-            return GetMyBases();
+            return GetMyBases;
         }
 
-        public new Dictionary<GameObject, float> GetAllTargetTanksFound()
+        public Dictionary<GameObject, float> TankGetAllTargetTanksFound()
         {
-            return GetAllTargetTanksFound();
-        }
-        
-        public new Dictionary<GameObject, float> GetAllConsumablesFound()
-        {
-            return GetAllConsumablesFound();
+            return GetAllTargetTanksFound;
         }
 
-        public new Dictionary<GameObject, float> GetAllBasesFound()
+        public Dictionary<GameObject, float> TankGetAllConsumablesFound()
         {
-            return GetAllBasesFound();
+            return GetAllConsumablesFound;
         }
 
-        public new void FindPathToPoint(GameObject pointInWorld)
+        public Dictionary<GameObject, float> TankGetAllBasesFound()
+        {
+            return GetAllBasesFound;
+        }
+
+        public void TankFindPathToPoint(GameObject pointInWorld)
         {
             FindPathToPoint(pointInWorld);
         }
-        public new void FollowPathToPoint(GameObject pointInWorld, float normalizedSpeed)
+        public void TankFollowPathToPoint(GameObject pointInWorld, float normalizedSpeed)
         {
-            FollowPathToPoint(pointInWorld,normalizedSpeed);
+            FollowPathToPoint(pointInWorld, normalizedSpeed);
         }
 
-        public new void FollowPathToRandomPoint(float normalizedSpeed)
+        public void TankFollowPathToRandomPoint(float normalizedSpeed)
         {
             FollowPathToRandomPoint(normalizedSpeed);
         }
 
-        public new void GenerateRandomPoint()
+        public void TankGenerateRandomPoint()
         {
             GenerateRandomPoint();
         }
 
-        public new void StopTank()
+        public void TankStopTank()
         {
             StopTank();
         }
 
-        public new void StartTank()
+        public void TankStartTank()
         {
             StartTank();
         }
 
-        public new void FaceTurretToPoint(Vector3 pointInWorld)
+        public void TankFaceTurretToPoint(Vector3 pointInWorld)
         {
             FaceTurretToPoint(pointInWorld);
         }
 
-       public new void ResetTurret()
+        public void TankResetTurret()
         {
             ResetTurret();
         }
 
-        public new void FireAtPoint(GameObject pointInWorld)
+        public void TankFireAtPoint(GameObject pointInWorld)
         {
             FireAtPoint(pointInWorld);
         }

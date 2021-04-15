@@ -1,6 +1,6 @@
 ﻿
 using System;
-
+using System.Linq;
 namespace RGLM
 {
     public abstract class BaseState

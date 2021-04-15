@@ -1,16 +1,15 @@
 ﻿
 using System;
 using System.Diagnostics;
-using System.Linq;
 using UnityEngine;
 
 namespace RGLM
 {
-    public class RoamState : BaseState
+    public class DefaultState : BaseState
     {
         private RGLMTank aiTank;
 
-        public RoamState(RGLMTank aiTank)
+        public DefaultState(RGLMTank aiTank)
         {
             this.aiTank = aiTank;
         }
@@ -28,7 +27,7 @@ namespace RGLM
 
         public override Type StateUpdate()
         {
-            return null;
+            return typeof(RoamState);
         }
     }
 }
