@@ -28,7 +28,7 @@ namespace RGLM
 
         public override Type StateUpdate()
         {
-            if (aiTank.TankGetFuelLevel() <= aiTank.LowFuel || aiTank.TankGetHealthLevel() <= aiTank.LowHP || aiTank.TankGetFuelLevel() <= aiTank.LowAmmo) //If resources are low.
+            if (aiTank.TankGetFuelLevel() <= aiTank.LowFuel || aiTank.TankGetHealthLevel() <= aiTank.LowHP || aiTank.TankGetAmmoLevel() <= aiTank.LowAmmo) //If resources are low.
             {
                 aiTank.needsResources = true; //Tank is low on resources.
                 return typeof(JFleeingState); //State change - Fleeing.
@@ -44,6 +44,7 @@ namespace RGLM
                         {
                             aiTank.TankFireAtPoint(aiTank.targetTankPosition); //Shoot at enemy.
                         }
+
                         else
                         {
                             aiTank.TankFollowPathToPoint(aiTank.targetTankPosition, 1f); //Get closer to enemy.
