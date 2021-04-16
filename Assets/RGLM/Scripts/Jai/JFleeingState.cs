@@ -7,7 +7,7 @@ namespace RGLM
     {
         private JTankV1 aiTank;
 
-        private float t = 0;
+        private float t = 0; //Time passed counter.
 
         public JFleeingState(JTankV1 aiTank)
         {
@@ -28,13 +28,13 @@ namespace RGLM
 
         public override Type StateUpdate()
         {
-            if (aiTank.targetTanksFound.Count > 0 && !aiTank.needsResources)
+            if (aiTank.targetTanksFound.Count > 0 && !aiTank.needsResources) //If enemy in sight and have enough resources.
             {
-                return typeof(JGulagState);
+                return typeof(JGulagState); //State change - Gulag.
             }
-            if (aiTank.consumablesFound.Count > 0)
+            if (aiTank.consumablesFound.Count > 0) //If consumables in sight.
             {
-                return typeof(JResourceGathering);
+                return typeof(JResourceGathering); //State change - Resource gathering.
             }
             else
             {
@@ -43,11 +43,11 @@ namespace RGLM
                 aiTank.basePosition = null;
                 aiTank.TankFollowPathToRandomPoint(1f);
                 t += Time.deltaTime;
-                if (t > 10)
+                if (t > 10) //Wait 10s.
                 {
-                    aiTank.TankGenerateRandomPoint();
+                    aiTank.TankGenerateRandomPoint(); // ? Not sure if this is necessary since you are changing the state anyway ?
                     t = 0;
-                    return typeof(JRotatingState);
+                    return typeof(JRotatingState); //State change - Rotating.
                 }
             }
             return null;

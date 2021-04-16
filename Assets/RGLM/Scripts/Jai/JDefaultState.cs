@@ -26,7 +26,7 @@ namespace RGLM
 
         public override Type StateUpdate()
         {
-            return typeof(JRotatingState);
+            return typeof(JRotatingState); //State change - Rotating.
         }
     }
 }

@@ -29,57 +29,56 @@ namespace RGLM
 
         public override Type StateUpdate()
         {
-            //if low health or ammo, go searching
-            if (aiTank.TankGetHealthLevel() < aiTank.LowHP || aiTank.TankGetAmmoLevel() < aiTank.LowAmmo || aiTank.TankGetFuelLevel() < aiTank.LowFuel || aiTank.needsResources)
+
+            if (aiTank.TankGetHealthLevel() < aiTank.LowHP || aiTank.TankGetAmmoLevel() < aiTank.LowAmmo || aiTank.TankGetFuelLevel() < aiTank.LowFuel || aiTank.needsResources) //If resources are low.
             {
-                if (aiTank.consumablesFound.Count > 0)
+                if (aiTank.consumablesFound.Count > 0) //If counsumable is in sight.
                 {
+                    //Move to consumable.
                     aiTank.consumablePosition = aiTank.consumablesFound.First().Key;
                     aiTank.TankFollowPathToPoint(aiTank.consumablePosition, 1f);
                     t += Time.deltaTime;
-                    if (t > 10)
+                    if (t > 10) //Wait for 10s.
                     {
                         aiTank.TankGenerateRandomPoint();
                         t = 0;
                     }
-                    return typeof(JResourceGathering);
+                    return typeof(JResourceGathering); //State change - Resource gathering.
                 }
                 else
                 {
-                    aiTank.targetTankPosition = null;
-                    aiTank.consumablePosition = null;
-                    aiTank.basePosition = null;
+                    // I think this was causing the problem with fleeing we found with Jai ~Artur
+                    //aiTank.targetTankPosition = null;
+                    //aiTank.consumablePosition = null;
+                    //aiTank.basePosition = null;
                     aiTank.TankFollowPathToRandomPoint(1f);
                 }
             }       
 
-            //if there is a consumables
-            else if (aiTank.consumablesFound.Count > 0)
+            else if (aiTank.consumablesFound.Count > 0) //If consumable is in sight.
             {
-                return typeof(JResourceGathering);
+                return typeof(JResourceGathering); //State change - Resource gathering.
             }
             
-            //if there is a target found
-            else if (aiTank.targetTanksFound.Count > 0 && aiTank.targetTanksFound.First().Key != null && !aiTank.needsResources)
+            else if (aiTank.targetTanksFound.Count > 0 && aiTank.targetTanksFound.First().Key != null && !aiTank.needsResources) //If enemy in isght and have enough resources.
             {
-                return typeof(JGulagState);
+                return typeof(JGulagState); //State change - Gulag.
             }
 
-            else if (aiTank.basesFound.Count > 0)
+            else if (aiTank.basesFound.Count > 0) //If enemy base in sight.
             {
-                aiTank.basePosition = aiTank.basesFound.First().Key;
-                return typeof(JBaseWreakerState);
+                aiTank.basePosition = aiTank.basesFound.First().Key; //Set enemy base as target.
+                return typeof(JBaseWreakerState); //State change - Base wrecker.
             }
 
-            else
+            else //Keep moving.
             {
-                //searching
                 aiTank.targetTankPosition = null;
                 aiTank.consumablePosition = null;
                 aiTank.basePosition = null;
                 aiTank.TankFollowPathToRandomPoint(1f);
                 t += Time.deltaTime;
-                if (t > 10)
+                if (t > 10) //Wait 10s.
                 {
                     aiTank.TankGenerateRandomPoint();
                     t = 0;

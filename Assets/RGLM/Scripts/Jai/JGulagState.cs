@@ -8,7 +8,7 @@ namespace RGLM
     {
         private JTankV1 aiTank;
 
-        private float t = 0;
+        private float t = 0; //Time passed counter.
 
         public JGulagState(JTankV1 aiTank)
         {
@@ -28,41 +28,40 @@ namespace RGLM
 
         public override Type StateUpdate()
         {
-            if (aiTank.TankGetFuelLevel() <= aiTank.LowFuel || aiTank.TankGetHealthLevel() <= aiTank.LowHP || aiTank.TankGetFuelLevel() <= aiTank.LowAmmo)
+            if (aiTank.TankGetFuelLevel() <= aiTank.LowFuel || aiTank.TankGetHealthLevel() <= aiTank.LowHP || aiTank.TankGetFuelLevel() <= aiTank.LowAmmo) //If resources are low.
             {
-                aiTank.needsResources = true;
-                return typeof(JFleeingState);
+                aiTank.needsResources = true; //Tank is low on resources.
+                return typeof(JFleeingState); //State change - Fleeing.
             }
             else
             { 
-                if (aiTank.targetTanksFound.Count > 0 && aiTank.targetTanksFound.First().Key != null)
+                if (aiTank.targetTanksFound.Count > 0 && aiTank.targetTanksFound.First().Key != null) //If enemy tank is in sight.
                 {
-                    aiTank.targetTankPosition = aiTank.targetTanksFound.First().Key;
+                    aiTank.targetTankPosition = aiTank.targetTanksFound.First().Key; //Set enemy position as target destination.
                     if (aiTank.targetTankPosition != null)
                     {
-                        //get closer to target, and fire
-                        if (Vector3.Distance(aiTank.transform.position, aiTank.targetTankPosition.transform.position) < 25f)
+                        if (Vector3.Distance(aiTank.transform.position, aiTank.targetTankPosition.transform.position) < 25f) //If enemy is in range
                         {
-                            aiTank.TankFireAtPoint(aiTank.targetTankPosition);
+                            aiTank.TankFireAtPoint(aiTank.targetTankPosition); //Shoot at enemy.
                         }
                         else
                         {
-                            aiTank.TankFollowPathToPoint(aiTank.targetTankPosition, 1f);
+                            aiTank.TankFollowPathToPoint(aiTank.targetTankPosition, 1f); //Get closer to enemy.
                             t += Time.deltaTime;
-                            if (t > 10)
+                            if (t > 10) //Wait 10s.
                             {
                                 t = 0;
-                                return typeof(JRotatingState);
+                                return typeof(JRotatingState); //State change - Rotating.
                             }
                         }
                     }
                 }
                 else
                 {
-                    aiTank.TankFollowPathToPoint(aiTank.targetTankPosition, 1f);
+                    aiTank.TankFollowPathToPoint(aiTank.targetTankPosition, 1f); //Get closer to enemy.
                     if (Vector3.Distance(aiTank.transform.position, aiTank.targetTankPosition.transform.position) < 2f)
                     {
-                        return typeof(JFleeingState);
+                        return typeof(JFleeingState); //State change - Fleeing.
                     }
                 }
             }

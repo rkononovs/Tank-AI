@@ -56,14 +56,14 @@ namespace RGLM
             
         }
 
-        public void Rotate360()
+        public void Rotate360() //Call method for turret rotation.
         {
             isRotating = true;
             Calculate360Points();
             StartCoroutine("MoveSightAndWait");
         }
 
-        IEnumerator MoveSightAndWait()
+        IEnumerator MoveSightAndWait() //Turn turret.
         {
             for (int i = 0; i < 30; i++)
             {

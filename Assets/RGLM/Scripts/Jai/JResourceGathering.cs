@@ -8,7 +8,7 @@ namespace RGLM
     {
         private JTankV1 aiTank;
 
-        private float t = 0;
+        private float t = 0; //Time passed counter.
 
         public JResourceGathering(JTankV1 aiTank)
         {
@@ -28,8 +28,9 @@ namespace RGLM
 
         public override Type StateUpdate()
         {
-            if (aiTank.consumablesFound.Count > 0) //Pick up items.
+            if (aiTank.consumablesFound.Count > 0) //If resource found.
             {
+                //Pick up items.
                 aiTank.consumablePosition = aiTank.consumablesFound.First().Key;
                 aiTank.TankFollowPathToPoint(aiTank.consumablePosition, 1f);
             }
@@ -44,7 +45,7 @@ namespace RGLM
                     }
                 }
 
-                if (aiTank.TankGetFuelLevel() < aiTank.LowFuel)
+                if (aiTank.TankGetFuelLevel() < aiTank.LowFuel) //If fuel is low
                 {
                     return typeof(JRotatingState); //State change - Rotate.
                 }
@@ -56,7 +57,7 @@ namespace RGLM
                     }
                     else
                     {
-                        t += Time.deltaTime;
+                        t += Time.deltaTime;//Wait for 1s to change state(give enough time to notice the resource).
                         if (t > 1)
                         {
                             t = 0;

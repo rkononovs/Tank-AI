@@ -62,7 +62,7 @@ namespace RGLM
 
 
         //New methods section
-        public void Calculate360Points()
+        public void Calculate360Points() //Points for turret to rotate 360 degrees.
         {
             float nextAngle = -77;
             float temp = 360 / 30 ;
@@ -78,13 +78,13 @@ namespace RGLM
 
         }
 
-        public void Rotate360()
+        public void Rotate360() //Call method for turret rotation.
         {
             Calculate360Points();
             StartCoroutine("MoveSightAndWait");
         }
 
-        IEnumerator MoveSightAndWait()
+        IEnumerator MoveSightAndWait() //Turn tank turret.
         {
             for(int i = 0; i<30; i++)
             {
