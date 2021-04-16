@@ -41176,10 +41176,11 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
-  LowHP: 110
+  LowHP: 30
   LowAmmo: 5
   LowFuel: 30
-  isAttacking: 0
+  needsResources: 0
+  isRotating: 0
 --- !u!1 &1545814165
 GameObject:
   m_ObjectHideFlags: 0
