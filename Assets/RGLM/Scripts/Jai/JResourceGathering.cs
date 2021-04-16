@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Linq;
+using UnityEngine;
 
 namespace RGLM
 {
     public class JResourceGathering : BaseState
     {
         private JTankV1 aiTank;
+
+        private float t = 0;
 
         public JResourceGathering(JTankV1 aiTank)
         {
@@ -53,7 +56,12 @@ namespace RGLM
                     }
                     else
                     {
-                        return typeof(JFleeingState); //State change - Flee.
+                        t += Time.deltaTime;
+                        if (t > 1)
+                        {
+                            t = 0;
+                            return typeof(JFleeingState); //State change - Flee.
+                        }
                     }
                 }
             }

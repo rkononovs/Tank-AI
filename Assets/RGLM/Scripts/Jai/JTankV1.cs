@@ -13,6 +13,10 @@ namespace RGLM
         public float LowAmmo;
         public float LowFuel;
 
+        [Header("Attributes")]
+        public float HP;
+        public float Ammo;
+        public float Fuel;
 
         [Header("Booleans")]
         public bool needsResources = false;
@@ -42,6 +46,9 @@ namespace RGLM
             targetTanksFound = GetAllTargetTanksFound;
             consumablesFound = GetAllConsumablesFound;
             basesFound = GetAllBasesFound;
+            HP = TankGetHealthLevel();
+            Ammo = TankGetAmmoLevel();
+            Fuel = TankGetFuelLevel();
         }
 
         public override void AIOnCollisionEnter(Collision collision)

@@ -28,6 +28,10 @@ namespace RGLM
 
         public override Type StateUpdate()
         {
+            if (aiTank.targetTanksFound.Count > 0 && !aiTank.needsResources)
+            {
+                return typeof(JGulagState);
+            }
             if (aiTank.consumablesFound.Count > 0)
             {
                 return typeof(JResourceGathering);
