@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using UnityEditorInternal;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace RGLM
 {
-    public class RGLMTank : AITank
+    public class BTTank : AITank
     {
+        public GameObject targetGameObject, randomNodeGO;
+
         public Dictionary<GameObject, float> targetTanksFound = new Dictionary<GameObject, float>();
         public Dictionary<GameObject, float> consumablesFound = new Dictionary<GameObject, float>();
         public Dictionary<GameObject, float> basesFound = new Dictionary<GameObject, float>();
@@ -18,20 +18,11 @@ namespace RGLM
         public GameObject consumablePosition;
         public GameObject basePosition;
 
-        public GameObject lookAtPosition;
-        public Vector3[] pointsColection = new Vector3[30];
-
-        bool lowHealth;
-
         public BTAction healthCheck;
         public BTAction ammoCheck;
         public BTAction targetSpottedCheck;
         public BTAction targetReachedCheck;
         public BTSequence regenSequence;
-
-        public Dictionary<string, bool> stats = new Dictionary<string, bool>();
-        public Rules rules = new Rules();
-
 
         /*******************************************************************************************************      
         WARNING, do not include void Start(), use AITankStart() instead if you want to use Start method from Monobehaviour.
@@ -39,7 +30,6 @@ namespace RGLM
         public override void AITankStart()
         {
             InitializeStateMachine();
-            InitializeRuleBasedSystem();
             InitializeBehaviouralTrees();
         }
 
@@ -60,67 +50,15 @@ namespace RGLM
         {
         }
 
-
-        //New methods section
-        public void Calculate360Points()
-        {
-            float nextAngle = -77;
-            float temp = 360 / 30 ;
-
-            for (int i = 0; i<30; i++)
-            {
-                float x = transform.position.x + Mathf.Cos(nextAngle * ((float)Math.PI / 180)) * 50;
-                float z = transform.position.x + Mathf.Sin(nextAngle * ((float)Math.PI / 180)) * 50;
-                float y = transform.position.y;
-                pointsColection[i] = new Vector3(x, y, z);
-                nextAngle += temp;
-            }
-
-        }
-
-        public void Rotate360()
-        {
-            Calculate360Points();
-            StartCoroutine("MoveSightAndWait");
-        }
-
-        IEnumerator MoveSightAndWait()
-        {
-            for(int i = 0; i<30; i++)
-            {
-                yield return new WaitForSeconds(0.15f);
-                lookAtPosition.transform.position = pointsColection[i];
-            }
-        }
-
-
         //State Machine Section
         void InitializeStateMachine()
         {
             Dictionary<Type, BaseState> states = new Dictionary<Type, BaseState>();
-            states.Add(typeof(DefaultState), new DefaultState(this));
-            states.Add(typeof(RoamState), new RoamState(this));
-            states.Add(typeof(RunState), new RunState(this));
-            states.Add(typeof(AnalyzeState), new AnalyzeState(this));
+            states.Add(typeof(RKRoamState), new RKRoamState(this));
+            states.Add(typeof(RKChaseState), new RKChaseState(this));
             GetComponent<StateMachine>().SetStates(states);
         }
 
-        //Rule Based Section
-        void InitializeRuleBasedSystem()
-        {
-            stats.Add("lowHealth", lowHealth);
-            stats.Add("targetSpotted", false);
-            stats.Add("targetReached", false);
-            stats.Add("fleeState", false);
-            stats.Add("searchState", false);
-            stats.Add("attackState", false);
-
-            rules.AddRule(new Rule("attackState", "lowHealth", typeof(RoamState), Rule.Predicate.And));
-            rules.AddRule(new Rule("attackState", "lowHealth", typeof(RoamState), Rule.Predicate.And));
-        }
-
-
-        // BT Section
         void InitializeBehaviouralTrees()
         {
             healthCheck = new BTAction(HealthCheck);
@@ -129,6 +67,7 @@ namespace RGLM
             targetReachedCheck = new BTAction(TargetReachedCheck);
             regenSequence = new BTSequence(new List<BTBaseNode> { healthCheck, ammoCheck });
         }
+
         public BTNodeStates TargetReachedCheck()
         {
             throw new NotImplementedException();
@@ -148,8 +87,6 @@ namespace RGLM
         {
             throw new NotImplementedException();
         }
-
-
 
         //Making use of protected AITank methods
         public bool TankIsFiring()
@@ -240,8 +177,6 @@ namespace RGLM
         {
             FireAtPoint(pointInWorld);
         }
-
-
     }
 }
 
