@@ -49,7 +49,7 @@ namespace RGLM
             }
         }
 
-        void SwitchToState(Type nextState)
+        public void SwitchToState(Type nextState)
         {
             CurrentState.StateExit();
             CurrentState = states[nextState];
