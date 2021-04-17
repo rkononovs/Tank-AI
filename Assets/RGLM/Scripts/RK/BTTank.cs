@@ -1,28 +1,48 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditorInternal;
 using UnityEngine;
 
 namespace RGLM
 {
-    public class BTTank : AITank
+    public class BTTank : RGLMTank
     {
-        public GameObject targetGameObject, randomNodeGO;
+        [Header("Low Attribute Settings")]
+        public float LowHP;
+        public float LowAmmo;
+        public float LowFuel;
 
-        public Dictionary<GameObject, float> targetTanksFound = new Dictionary<GameObject, float>();
-        public Dictionary<GameObject, float> consumablesFound = new Dictionary<GameObject, float>();
-        public Dictionary<GameObject, float> basesFound = new Dictionary<GameObject, float>();
+        [Header("Attributes")]
+        public float HP;
+        public float Ammo;
+        public float Fuel;
+        public float waitTime;
 
-        public GameObject targetTankPosition;
-        public GameObject consumablePosition;
-        public GameObject basePosition;
+        [Header("Booleans")]
+        public bool needsResources = false;
+        public bool isRotating = false;
 
-        public BTAction healthCheck;
-        public BTAction ammoCheck;
-        public BTAction targetSpottedCheck;
-        public BTAction targetReachedCheck;
-        public BTSequence regenSequence;
+        public BTAction fuelCheck;
+        public BTAction enemyCheck;
+        public BTSequence fleeSequence;
+
+        /*
+public Dictionary<GameObject, float> targetTanksFound = new Dictionary<GameObject, float>();
+public Dictionary<GameObject, float> consumablesFound = new Dictionary<GameObject, float>();
+public Dictionary<GameObject, float> basesFound = new Dictionary<GameObject, float>();
+
+public GameObject targetTankPosition;
+public GameObject consumablePosition;
+public GameObject basePosition;
+
+public BTAction healthCheck;
+public BTAction ammoCheck;
+public BTAction targetSpottedCheck;
+public BTAction targetReachedCheck;
+public BTSequence regenSequence;
+*/
 
         /*******************************************************************************************************      
         WARNING, do not include void Start(), use AITankStart() instead if you want to use Start method from Monobehaviour.
@@ -41,6 +61,10 @@ namespace RGLM
             targetTanksFound = GetAllTargetTanksFound;
             consumablesFound = GetAllConsumablesFound;
             basesFound = GetAllBasesFound;
+
+            HP = TankGetHealthLevel();
+            Ammo = TankGetAmmoLevel();
+            Fuel = TankGetFuelLevel();
         }
 
         /*******************************************************************************************************       
@@ -50,12 +74,31 @@ namespace RGLM
         {
         }
 
+        public void Rotate360() //Call method for turret rotation.
+        {
+            Debug.Log("ROtating turret1");
+            isRotating = true;
+            Calculate360Points();
+            StartCoroutine("MoveSightAndWait");
+            Debug.Log("ROtating turret2");
+        }
+
+        IEnumerator MoveSightAndWait() //Turn turret.
+        {
+            for (int i = 0; i < 30; i++)
+            {
+                yield return new WaitForSeconds(0.15f);
+                lookAtPosition.transform.position = pointsColection[i];
+                Debug.Log("ROtating turret");
+            }
+            isRotating = false;
+        }
+
         //State Machine Section
         void InitializeStateMachine()
         {
             Dictionary<Type, BaseState> states = new Dictionary<Type, BaseState>();
-            states.Add(typeof(RKRoamState), new RKRoamState(this));
-            states.Add(typeof(RKChaseState), new RKChaseState(this));
+            states.Add(typeof(RKWaitRotateState), new RKWaitRotateState(this));
             GetComponent<StateMachine>().SetStates(states);
         }
 
@@ -63,29 +106,57 @@ namespace RGLM
         {
             healthCheck = new BTAction(HealthCheck);
             ammoCheck = new BTAction(AmmoCheck);
-            targetSpottedCheck = new BTAction(TargetSpottedCheck);
-            targetReachedCheck = new BTAction(TargetReachedCheck);
-            regenSequence = new BTSequence(new List<BTBaseNode> { healthCheck, ammoCheck });
-        }
-
-        public BTNodeStates TargetReachedCheck()
-        {
-            throw new NotImplementedException();
-        }
-
-        public BTNodeStates TargetSpottedCheck()
-        {
-            throw new NotImplementedException();
+            fuelCheck = new BTAction(FuelCheck);
+            enemyCheck = new BTAction(EnemyCheck);
+            fleeSequence = new BTSequence(new List<BTBaseNode> { });
         }
 
         public BTNodeStates AmmoCheck()
         {
-            throw new NotImplementedException();
+            if(TankGetAmmoLevel() > LowAmmo)
+            {
+                return BTNodeStates.FAILURE;
+            }
+            else
+            {
+                return BTNodeStates.SUCCESS;
+            }
         }
 
         public BTNodeStates HealthCheck()
         {
-            throw new NotImplementedException();
+            if(TankGetHealthLevel() > LowHP)
+            {
+                return BTNodeStates.FAILURE;
+            }
+            else
+            {
+                return BTNodeStates.SUCCESS;
+            }
+        }
+
+        public BTNodeStates FuelCheck()
+        {
+            if (TankGetHealthLevel() > LowFuel)
+            {
+                return BTNodeStates.FAILURE;
+            }
+            else
+            {
+                return BTNodeStates.SUCCESS;
+            }
+        }
+
+        public BTNodeStates EnemyCheck()
+        {
+            if (targetTanksFound.Count > 0 && targetTanksFound.First().Key != null)
+            {
+                return BTNodeStates.FAILURE;
+            }
+            else
+            {
+                return BTNodeStates.SUCCESS;
+            }
         }
 
         //Making use of protected AITank methods
