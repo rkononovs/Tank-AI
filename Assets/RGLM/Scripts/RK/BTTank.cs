@@ -105,6 +105,7 @@ public BTSequence regenSequence;
             states.Add(typeof(RKFleeingState), new RKFleeingState(this));
             states.Add(typeof(RKBaseWreakerState), new RKBaseWreakerState(this));
             states.Add(typeof(RKAttack), new RKAttack(this));
+            states.Add(typeof(RKSearchingState), new RKSearchingState(this));
             GetComponent<StateMachine>().SetStates(states);
         }
 

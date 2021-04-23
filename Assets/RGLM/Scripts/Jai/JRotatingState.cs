@@ -14,7 +14,7 @@ namespace RGLM
 
         public override Type StateEnter()
         {
-            UnityEngine.Debug.LogError("Entered State - Rotating state");
+            UnityEngine.Debug.LogError("Entered State - Jai Rotating state");
             aiTank.Rotate360(); //Call function to turn turret.
             return null;
         }

@@ -18,7 +18,7 @@ namespace RGLM
 
         public override Type StateEnter()
         {
-            UnityEngine.Debug.LogError("Entered State - Searching state");
+            UnityEngine.Debug.LogError("Entered State - Jai Searching state");
             return null;
         }
 
