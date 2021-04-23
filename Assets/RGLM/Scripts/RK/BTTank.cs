@@ -9,6 +9,8 @@ namespace RGLM
 {
     public class BTTank : RGLMTank
     {
+        GameObject consumable;
+
         [Header("Low Attribute Settings")]
         public float LowHP;
         public float LowAmmo;
@@ -26,7 +28,11 @@ namespace RGLM
 
         public BTAction fuelCheck;
         public BTAction enemyCheck;
+        public BTAction fireTurret;
+        public BTAction rotateTurret;
+
         public BTSequence fleeSequence;
+        public BTSequence fireAtEnemy;
 
         /*
 public Dictionary<GameObject, float> targetTanksFound = new Dictionary<GameObject, float>();
@@ -76,11 +82,11 @@ public BTSequence regenSequence;
 
         public void Rotate360() //Call method for turret rotation.
         {
-            Debug.Log("ROtating turret1");
+            Debug.Log("Rotating turret1");
             isRotating = true;
             Calculate360Points();
             StartCoroutine("MoveSightAndWait");
-            Debug.Log("ROtating turret2");
+            Debug.Log("Rotating turret2");
         }
 
         IEnumerator MoveSightAndWait() //Turn turret.
@@ -92,6 +98,33 @@ public BTSequence regenSequence;
                 Debug.Log("ROtating turret");
             }
             isRotating = false;
+        }
+
+        void FindFuel()
+        {
+            consumable = consumablesFound.First().Key;
+            if (consumable.tag == "Fuel")
+            {
+                TankFollowPathToPoint(consumablePosition, 1f);
+            }
+        }
+
+        void FindAmmo()
+        {
+            consumable = consumablesFound.First().Key;
+            if (consumable.tag == "Ammo")
+            {
+                TankFollowPathToPoint(consumablePosition, 1f);
+            }
+        }
+
+        void FindHealth()
+        {
+            consumable = consumablesFound.First().Key;
+            if (consumable.tag == "Health")
+            {
+                TankFollowPathToPoint(consumablePosition, 1f);
+            }
         }
 
         //State Machine Section
@@ -114,7 +147,24 @@ public BTSequence regenSequence;
             ammoCheck = new BTAction(AmmoCheck);
             fuelCheck = new BTAction(FuelCheck);
             enemyCheck = new BTAction(EnemyCheck);
+            fireTurret = new BTAction(FireTurret);
+            rotateTurret = new BTAction(RotateTurret);
             fleeSequence = new BTSequence(new List<BTBaseNode> { });
+            fireAtEnemy = new BTSequence(new List<BTBaseNode> {enemyCheck, rotateTurret, fireTurret });
+        }
+
+        public BTNodeStates FireTurret()
+        {
+            GameObject enemy = targetTanksFound.First().Key;
+            FireAtPoint(enemy);
+            return BTNodeStates.SUCCESS;
+        }
+
+        public BTNodeStates RotateTurret()
+        {
+            GameObject enemy = targetTanksFound.First().Key;
+            FaceTurretToPoint(enemy.transform.position);
+            return BTNodeStates.SUCCESS;
         }
 
         public BTNodeStates AmmoCheck()
