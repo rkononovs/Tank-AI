@@ -16,7 +16,7 @@ namespace RGLM
 
         public override Type StateEnter()
         {
-            UnityEngine.Debug.LogError("Entered State - Fleeing state");
+            UnityEngine.Debug.LogError("Entered State - Romans Fleeing state");
             return null;
         }
 

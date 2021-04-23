@@ -17,7 +17,7 @@ namespace RGLM
 
         public override Type StateEnter()
         {
-            UnityEngine.Debug.LogError("Entered State - Resource Gathering state");
+            UnityEngine.Debug.LogError("Entered State - Romans Resource Gathering state");
             return null;
         }
 

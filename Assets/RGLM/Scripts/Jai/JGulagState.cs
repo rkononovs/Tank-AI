@@ -17,7 +17,7 @@ namespace RGLM
 
         public override Type StateEnter()
         {
-            UnityEngine.Debug.LogError("Entered State - Gulag state");
+            UnityEngine.Debug.LogError("Entered State - Jai Gulag state");
             return null;
         }
 

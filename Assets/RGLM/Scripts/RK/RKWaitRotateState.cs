@@ -17,6 +17,7 @@ namespace RGLM
 
         public override Type StateEnter()
         {
+            UnityEngine.Debug.LogError("Entered State - Romans Wait Rotate state");
             return null;
         }
 

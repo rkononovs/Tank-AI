@@ -32,6 +32,10 @@ namespace RGLM
         public Dictionary<string, bool> stats = new Dictionary<string, bool>();
         public Rules rules = new Rules();
 
+        private void Awake()
+        {
+            SpawnLookPoint();
+        }
 
         /*******************************************************************************************************      
         WARNING, do not include void Start(), use AITankStart() instead if you want to use Start method from Monobehaviour.
@@ -61,7 +65,16 @@ namespace RGLM
         }
 
 
+
         //New methods section
+
+        void SpawnLookPoint()
+        {
+            if (lookAtPosition == null)
+            {
+                lookAtPosition = new GameObject("RGLM look position");
+            }
+        }
         public void Calculate360Points() //Points for turret to rotate 360 degrees.
         {
             float nextAngle = -77;

@@ -19,7 +19,7 @@ namespace RGLM
 
         public override Type StateEnter()
         {
-            Debug.Log("Entered State - Attack");
+            Debug.Log("Entered State - Romans Attack");
             return null;
         }
 
