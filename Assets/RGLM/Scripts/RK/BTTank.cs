@@ -208,11 +208,11 @@ public BTSequence regenSequence;
         {
             if (targetTanksFound.Count > 0 && targetTanksFound.First().Key != null)
             {
-                return BTNodeStates.FAILURE;
+                return BTNodeStates.SUCCESS;
             }
             else
             {
-                return BTNodeStates.SUCCESS;
+                return BTNodeStates.FAILURE;
             }
         }
 
