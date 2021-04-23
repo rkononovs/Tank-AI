@@ -39,35 +39,30 @@ namespace RGLM
             GetComponent<StateMachine>().SetStates(states);
         }
 
-        public bool CollectableNearby()
+        public void IsCollectableNearby()
         {
             if (consumablesFound.Count > 0)
             {
                 consumablePosition = consumablesFound.First().Key;
                 stats["collectableSpotted"] = true;
-                FollowPathToPoint(consumablePosition, 1);
-                return true;
             }
             else
             {
                 consumablePosition = null;
                 stats["collectableSpotted"] = false;
-                return false;
             }
         }
 
-        public bool EnemyNearby()
+        public void IsEnemyNearby()
         {
             if (targetTanksFound.Count > 0)
             {
                 enemyLastPosition = targetTanksFound.First().Key.transform.position;
                 stats["targetSpotted"] = true;
-                return true;
             }
             else
             {
                 stats["targetSpotted"] = false;
-                return false;
             }
         }
 
@@ -79,12 +74,10 @@ namespace RGLM
             stats.Add("collectableSpotted", false);
 
 
-            stats.Add("breakState", false);
+            stats.Add("breakState", true);
             stats.Add("movingState", false);
             stats.Add("runState", false);
-
-
-
+            stats.Add("gatherState", false);
 
             //Prioritze resources
             rules.AddRule(new Rule("collectableSpotted", "breakState", typeof(OGatherState), Rule.Predicate.And));

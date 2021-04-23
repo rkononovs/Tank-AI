@@ -6,7 +6,6 @@ namespace RGLM
     public class OGatherState : BaseState
     {
         private OLazyTank aiTank;
-        float t = 0;
         public OGatherState(OLazyTank aiTank)
         {
             this.aiTank = aiTank;
@@ -14,7 +13,6 @@ namespace RGLM
 
         public override Type StateEnter()
         {
-            t = 0;
             aiTank.stats["gatherState"] = true;
             return null;
         }
@@ -28,9 +26,15 @@ namespace RGLM
 
         public override Type StateUpdate()
         {
-            if (!aiTank.CollectableNearby())
+            aiTank.IsCollectableNearby();
+
+            if (aiTank.stats["collectableSpotted"])
+            {
+                aiTank.TankFollowPathToPoint(aiTank.consumablePosition,1);
+                return null;
+            }
+            else
                 return typeof(OBreakState);
-            return null;
         }
     }
 }

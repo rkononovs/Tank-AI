@@ -28,8 +28,9 @@ namespace RGLM
 
         public override Type StateUpdate()
         {
+            aiTank.IsCollectableNearby();
             t += Time.deltaTime;
-            if (t > aiTank.runTime)
+            if (t < aiTank.runTime)
             {
                 aiTank.TankFollowPathToRandomPoint(1f);
             }

@@ -35,8 +35,8 @@ namespace RGLM
             if (t > aiTank.breakTime)
                 return typeof(OMoveState);
 
-            aiTank.CollectableNearby();
-            aiTank.EnemyNearby();
+            aiTank.IsCollectableNearby();
+            aiTank.IsEnemyNearby();
 
             foreach(Rule rule in aiTank.rules.GetRules)
             {
