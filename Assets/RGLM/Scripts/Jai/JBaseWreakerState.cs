@@ -42,10 +42,10 @@ namespace RGLM
                 }
                 else //Enemy tank too far.
                 {
-                    aiTank.basePosition = aiTank.basesFound.First().Key; //Set enemy base position as target.
-                    if (aiTank.basePosition != null)
+                    
+                    if (aiTank.basesFound.Count > 0)
                     {
-                        
+                        aiTank.basePosition = aiTank.basesFound.First().Key; //Set enemy base position as target.
                         if (Vector3.Distance(aiTank.transform.position, aiTank.basePosition.transform.position) < 25f) //If enemy base in range.
                         {
                             aiTank.TankFireAtPoint(aiTank.basePosition); //Shoot at enemy base.
