@@ -45912,11 +45912,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb8aa42109d0ccb4abab8fd8ef19a547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetGameObject: {fileID: 0}
-  randomNodeGO: {fileID: 0}
   targetTankPosition: {fileID: 0}
   consumablePosition: {fileID: 0}
   basePosition: {fileID: 0}
+  lookAtPosition: {fileID: 1130401691}
+  pointsColection:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  LowHP: 0
+  LowAmmo: 0
+  LowFuel: 0
+  HP: 0
+  Ammo: 0
+  Fuel: 0
+  waitTime: 0
+  needsResources: 0
+  isRotating: 0
 --- !u!1 &1600744536
 GameObject:
   m_ObjectHideFlags: 0

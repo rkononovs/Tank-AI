@@ -99,6 +99,12 @@ public BTSequence regenSequence;
         {
             Dictionary<Type, BaseState> states = new Dictionary<Type, BaseState>();
             states.Add(typeof(RKWaitRotateState), new RKWaitRotateState(this));
+            states.Add(typeof(RKRotatingState), new RKRotatingState(this));
+            states.Add(typeof(RKResourceGathering), new RKResourceGathering(this));
+            states.Add(typeof(RKGulagState), new RKGulagState(this));
+            states.Add(typeof(RKFleeingState), new RKFleeingState(this));
+            states.Add(typeof(RKBaseWreakerState), new RKBaseWreakerState(this));
+            states.Add(typeof(RKAttack), new RKAttack(this));
             GetComponent<StateMachine>().SetStates(states);
         }
 
