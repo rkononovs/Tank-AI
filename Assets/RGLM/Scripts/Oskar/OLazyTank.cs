@@ -12,6 +12,13 @@ namespace RGLM
         public float runTime;
         public Vector3 enemyLastPosition;
 
+
+        [Header("Attributes")]
+        public float HP;
+        public float Ammo;
+        public float Fuel;
+
+
         public override void AITankStart()
         {
             InitializeStateMachine();
@@ -27,6 +34,9 @@ namespace RGLM
             targetTanksFound = GetAllTargetTanksFound;
             consumablesFound = GetAllConsumablesFound;
             basesFound = GetAllBasesFound;
+            HP = TankGetHealthLevel();
+            Ammo = TankGetAmmoLevel();
+            Fuel = TankGetFuelLevel();
         }
 
         void InitializeStateMachine()

@@ -36,34 +36,11 @@ namespace RGLM
             }
             else //No items.
             {
-                if (aiTank.TankGetHealthLevel() >= aiTank.LowHP && aiTank.TankGetAmmoLevel() >= aiTank.LowAmmo && aiTank.TankGetFuelLevel() >= aiTank.LowFuel) //If there are resources.
+                t += Time.deltaTime;
+                if (t > 1)
                 {
-                    aiTank.needsResources = false;
-                    if (aiTank.targetTanksFound.Count > 0 && !aiTank.needsResources) //If enemy is in range and tank have resources.
-                    { 
-                        return typeof(JGulagState); //State change - Gulag.
-                    }
-                }
-
-                if (aiTank.TankGetFuelLevel() < aiTank.LowFuel) //If fuel is low
-                {
-                    return typeof(JRotatingState); //State change - Rotate.
-                }
-                else
-                {
-                    if (aiTank.targetTanksFound.Count > 0 && !aiTank.needsResources) //If enemy is in range and tank have resources.
-                    {
-                        return typeof(JGulagState); //State change - Gulag.
-                    }
-                    else
-                    {
-                        t += Time.deltaTime;//Wait for 1s to change state(give enough time to notice the resource).
-                        if (t > 1)
-                        {
-                            t = 0;
-                            return typeof(JFleeingState); //State change - Flee.
-                        }
-                    }
+                    t = 0;
+                    return typeof(JRotatingState);
                 }
             }
             return null;

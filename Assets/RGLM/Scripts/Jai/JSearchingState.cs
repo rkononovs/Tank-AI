@@ -51,7 +51,7 @@ namespace RGLM
                     //aiTank.targetTankPosition = null;
                     //aiTank.consumablePosition = null;
                     //aiTank.basePosition = null;
-                    aiTank.TankFollowPathToRandomPoint(1f);
+                    aiTank.TankFollowPathToRandomPoint(0.5f);
                 }
             }       
 
@@ -76,7 +76,7 @@ namespace RGLM
                 aiTank.targetTankPosition = null;
                 aiTank.consumablePosition = null;
                 aiTank.basePosition = null;
-                aiTank.TankFollowPathToRandomPoint(1f);
+                aiTank.TankFollowPathToRandomPoint(0.5f);
                 t += Time.deltaTime;
                 if (t > 10) //Wait 10s.
                 {
