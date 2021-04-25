@@ -17,36 +17,39 @@ namespace RGLM
         public override Type StateEnter()
         {
             Debug.Log("Searching State");
+            aiTank.stats["SearchingState"] = true;
             return null;
         }
 
         public override Type StateExit()
         {
+            aiTank.stats["SearchingState"] = false;
             return null;
 
         }
 
         public override Type StateUpdate()
         {
-            if (aiTank.targetTanksFound.Count > 0)
+            aiTank.ResourceNear();
+            aiTank.EnemyNear();
+
+            if (aiTank.stats["EnemyNear"])
             {
-                return typeof(VGulagState);
+                return typeof(VFleeingState);
             }
             else
             {
-                if (aiTank.TankGetFuelLevel() < 60 || aiTank.TankGetHealthLevel() < 60 || aiTank.TankGetAmmoLevel() < 60)
+                if (aiTank.stats["ResourceNear"])
                 {
                     return typeof(VGatheringState);
                 }
                 else
                 {
-                    aiTank.TankFollowPathToRandomPoint(1);
-                    return typeof(VRotateState);
+                    return typeof(VRunState);
                 }
             }
 
 
-            //return null;
         }
     }
 }

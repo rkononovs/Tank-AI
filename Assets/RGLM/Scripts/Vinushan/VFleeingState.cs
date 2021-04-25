@@ -17,25 +17,31 @@ namespace RGLM
         public override Type StateEnter()
         {
             Debug.Log("Fleeing State");
+            aiTank.stats["FleeingState"] = true;
             return null;
         }
 
         public override Type StateExit()
         {
+            aiTank.stats["FleeingState"] = false;
             return null;
 
         }
 
         public override Type StateUpdate()
         {
-            aiTank.TankFollowPathToRandomPoint(1);
+            aiTank.EnemyNear();
 
-            if (aiTank.TankGetHealthLevel() < 60 || aiTank.TankGetFuelLevel() < 60 || aiTank.TankGetAmmoLevel() < 60)
+            if (aiTank.stats["EnemyNear"])
+            {
+                aiTank.TankFollowPathToRandomPoint(1f);
+            }
+            else
             {
                 return typeof(VGatheringState);
             }
 
-            return typeof(VRotateState);
+            return null;
 
         }
     }
