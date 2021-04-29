@@ -93,14 +93,14 @@ namespace RGLM
             Dictionary<Type, BaseState> states = new Dictionary<Type, BaseState>(); // Create dictiory with states
 
             // Initialize all states
-            states.Add(typeof(RKWaitRotateState), new RKWaitRotateState(this));
-            states.Add(typeof(RKRotatingState), new RKRotatingState(this));
-            states.Add(typeof(RKResourceGathering), new RKResourceGathering(this));
-            states.Add(typeof(RKGulagState), new RKGulagState(this));
-            states.Add(typeof(RKFleeingState), new RKFleeingState(this));
-            states.Add(typeof(RKBaseWreakerState), new RKBaseWreakerState(this));
-            states.Add(typeof(RKAttack), new RKAttack(this));
-            states.Add(typeof(RKSearchingState), new RKSearchingState(this));
+            states.Add(typeof(RKWaitRotateState), new RKWaitRotateState(this)); // Wait for a few seconds and rotate
+            states.Add(typeof(RKRotatingState), new RKRotatingState(this)); // Used for rotating
+            states.Add(typeof(RKResourceGathering), new RKResourceGathering(this)); // Used for gathering consumables
+            states.Add(typeof(RKGulagState), new RKGulagState(this)); // Used for attacking
+            states.Add(typeof(RKFleeingState), new RKFleeingState(this)); // Used for running from enemy tank
+            states.Add(typeof(RKBaseWreakerState), new RKBaseWreakerState(this)); // Used for attacking bases
+            states.Add(typeof(RKAttack), new RKAttack(this)); // Used for attacking
+            states.Add(typeof(RKSearchingState), new RKSearchingState(this)); // Used for searching when low on resources
 
             GetComponent<StateMachine>().SetStates(states); // Set base state
         }
