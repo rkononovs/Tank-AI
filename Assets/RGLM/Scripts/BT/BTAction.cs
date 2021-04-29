@@ -18,7 +18,7 @@ namespace RGLM
             this.btAction = btAction;
         }
 
-        // Evaluates the actio node
+        // Evaluates the action node
         public override BTNodeStates Evaluate()
         {
             switch (btAction())

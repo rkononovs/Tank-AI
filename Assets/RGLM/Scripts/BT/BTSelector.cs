@@ -6,10 +6,10 @@ namespace RGLM
 {
     public class BTSelector : BTBaseNode
     {
-        /* The child nodes for this selector */
+        // The child nodes for this selector
         protected List<BTBaseNode> btNodes = new List<BTBaseNode>();
 
-        /* The constructor requires a lsit of child nodes to be passed in*/
+        // The constructor requires a lsit of child nodes to be passed in
         public BTSelector(List<BTBaseNode> btNodes)
         {
             this.btNodes = btNodes;
@@ -17,10 +17,10 @@ namespace RGLM
 
         /* If any of the children reports a success, the selector will 
          * immediately report a success upwards. If all children fail, 
-         * it will report a failure instead.*/
+         * it will report a failure instead. */
         public override BTNodeStates Evaluate()
         {
-            foreach (BTBaseNode btNode in btNodes)
+            foreach (BTBaseNode btNode in btNodes) // Check each BTNode
             {
                 switch (btNode.Evaluate())
                 {
@@ -33,6 +33,7 @@ namespace RGLM
                         continue;
                 }
             }
+            // If all of them if failure return it as failure
             btNodeState = BTNodeStates.FAILURE;
             return btNodeState;
         }
