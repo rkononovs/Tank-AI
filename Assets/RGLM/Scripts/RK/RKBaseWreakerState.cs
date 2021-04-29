@@ -15,7 +15,7 @@ namespace RGLM
 
         public override Type StateEnter()
         {
-            UnityEngine.Debug.LogError("Entered State - Romans Base Wreaker state");
+            // UnityEngine.Debug.LogError("Entered State - Romans Base Wreaker state"); // For DEBUG PURPOSES
             return null;
         }
 
@@ -41,7 +41,7 @@ namespace RGLM
                 else //Enemy tank too far.
                 {
                     aiTank.basePosition = aiTank.basesFound.First().Key; //Set enemy base position as target.
-                    if (aiTank.basePosition != null)
+                    if (aiTank.basePosition != null) // If there is a base
                     {
                         
                         if (Vector3.Distance(aiTank.transform.position, aiTank.basePosition.transform.position) < 25f) //If enemy base in range.

@@ -17,7 +17,7 @@ namespace RGLM
 
         public override Type StateEnter()
         {
-            UnityEngine.Debug.LogError("Entered State - Romans Gulag state");
+            // UnityEngine.Debug.LogError("Entered State - Romans Gulag state"); // For DEBUG PURPOSES
             return null;
         }
 
@@ -28,7 +28,7 @@ namespace RGLM
 
         public override Type StateUpdate()
         {
-            if (aiTank.fireAtEnemy.Evaluate() == BTNodeStates.SUCCESS)
+            if (aiTank.fireAtEnemy.Evaluate() == BTNodeStates.SUCCESS) // Evaluate BT sequence
             {
                 if (aiTank.TankGetFuelLevel() <= aiTank.LowFuel || aiTank.TankGetHealthLevel() <= aiTank.LowHP || aiTank.TankGetAmmoLevel() <= aiTank.LowAmmo) //If resources are low.
                 {
@@ -70,7 +70,7 @@ namespace RGLM
             }
             else
             {
-                return typeof(RKRotatingState);
+                return typeof(RKRotatingState); // Rotate
             }
             return null;
         }

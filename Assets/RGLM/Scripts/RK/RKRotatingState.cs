@@ -14,7 +14,7 @@ namespace RGLM
 
         public override Type StateEnter()
         {
-            UnityEngine.Debug.LogError("Entered State - Romans Rotating state");
+            // UnityEngine.Debug.LogError("Entered State - Romans Rotating state"); // For DEBUG PURPOSES
             aiTank.Rotate360(); //Call function to turn turret.
             return null;
         }
