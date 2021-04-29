@@ -6,7 +6,6 @@ namespace RGLM
     public class RKFleeingState : BaseState
     {
         private BTTank aiTank;
-
         private float t = 0; //Time passed counter.
 
         public RKFleeingState(BTTank aiTank)
@@ -23,7 +22,6 @@ namespace RGLM
         public override Type StateExit()
         {
             return null;
-
         }
 
         public override Type StateUpdate()

@@ -8,7 +8,6 @@ namespace RGLM
     public class RKSearchingState : BaseState
     {
         private float t = 0;
-
         private BTTank aiTank;
 
         public RKSearchingState(BTTank aiTank)
@@ -47,10 +46,6 @@ namespace RGLM
                 }
                 else
                 {
-                    // I think this was causing the problem with fleeing we found with Jai ~Artur
-                    //aiTank.targetTankPosition = null;
-                    //aiTank.consumablePosition = null;
-                    //aiTank.basePosition = null;
                     aiTank.TankFollowPathToRandomPoint(1f);
                 }
             }       

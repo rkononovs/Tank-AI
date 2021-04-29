@@ -7,7 +7,6 @@ namespace RGLM
     public class RKResourceGathering : BaseState
     {
         private BTTank aiTank;
-
         private float t = 0; //Time passed counter.
 
         public RKResourceGathering(BTTank aiTank)

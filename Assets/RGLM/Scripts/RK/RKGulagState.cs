@@ -46,7 +46,6 @@ namespace RGLM
                             {
                                 aiTank.TankFireAtPoint(aiTank.targetTankPosition); //Shoot at enemy.
                             }
-
                             else
                             {
                                 aiTank.TankFollowPathToPoint(aiTank.targetTankPosition, 1f); //Get closer to enemy.

@@ -16,14 +16,12 @@ namespace RGLM
         public override Type StateEnter()
         {
             UnityEngine.Debug.LogError("Entered State - Romans Base Wreaker state");
-            
             return null;
         }
 
         public override Type StateExit()
         {
             return null;
-
         }
 
         public override Type StateUpdate()
