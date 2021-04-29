@@ -17,7 +17,7 @@ namespace RGLM
 
         public override Type StateEnter()
         {
-            UnityEngine.Debug.LogError("Entered State - Romans Searching state");
+            // UnityEngine.Debug.LogError("Entered State - Romans Searching state"); // For DEBUG PURPOSES
             return null;
         }
 
