@@ -17,7 +17,7 @@ namespace RGLM
 
         public override Type StateEnter()
         {
-            UnityEngine.Debug.LogError("Entered State - Jai Resource Gathering state");
+            //UnityEngine.Debug.LogError("Entered State - Jai Resource Gathering state"); Used for debugging
             return null;
         }
 
@@ -40,7 +40,7 @@ namespace RGLM
                 if (t > 1)
                 {
                     t = 0;
-                    return typeof(JRotatingState);
+                    return typeof(JRotatingState); //State change - Rotating.
                 }
             }
             return null;

@@ -15,15 +15,13 @@ namespace RGLM
 
         public override Type StateEnter()
         {
-            UnityEngine.Debug.LogError("Entered State - Jai Base Wreaker state");
-            
+            //UnityEngine.Debug.LogError("Entered State - Jai Base Wreaker state"); Used for debuging 
             return null;
         }
 
         public override Type StateExit()
         {
             return null;
-
         }
 
         public override Type StateUpdate()

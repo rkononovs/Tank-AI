@@ -16,7 +16,7 @@ namespace RGLM
 
         public override Type StateEnter()
         {
-            UnityEngine.Debug.LogError("Entered State - Jai Fleeing state");
+            //UnityEngine.Debug.LogError("Entered State - Jai Fleeing state"); Used for debugging
             return null;
         }
 
@@ -45,7 +45,7 @@ namespace RGLM
                 t += Time.deltaTime;
                 if (t > 10) //Wait 10s.
                 {
-                    aiTank.TankGenerateRandomPoint(); // ? Not sure if this is necessary since you are changing the state anyway ?
+                    aiTank.TankGenerateRandomPoint();
                     t = 0;
                     return typeof(JRotatingState); //State change - Rotating.
                 }

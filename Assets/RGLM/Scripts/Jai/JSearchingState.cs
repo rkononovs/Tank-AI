@@ -7,7 +7,7 @@ namespace RGLM
 {
     public class JSearchingState : BaseState
     {
-        private float t = 0;
+        private float t = 0; //Time passed counter.
 
         private JTankV1 aiTank;
 
@@ -18,7 +18,7 @@ namespace RGLM
 
         public override Type StateEnter()
         {
-            UnityEngine.Debug.LogError("Entered State - Jai Searching state");
+            //UnityEngine.Debug.LogError("Entered State - Jai Searching state"); Used for debugging
             return null;
         }
 
@@ -47,10 +47,6 @@ namespace RGLM
                 }
                 else
                 {
-                    // I think this was causing the problem with fleeing we found with Jai ~Artur
-                    //aiTank.targetTankPosition = null;
-                    //aiTank.consumablePosition = null;
-                    //aiTank.basePosition = null;
                     aiTank.TankFollowPathToRandomPoint(0.5f);
                 }
             }       
