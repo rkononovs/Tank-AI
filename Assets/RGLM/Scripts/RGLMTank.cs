@@ -1,45 +1,37 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq.Expressions;
-using UnityEditorInternal;
 using UnityEngine;
-using UnityEngine.UIElements;
+
+//The main script that is the base for all scripts
 
 namespace RGLM
 {
     public class RGLMTank : AITank
     {
+        //Things the tank sees
         public Dictionary<GameObject, float> targetTanksFound = new Dictionary<GameObject, float>();
         public Dictionary<GameObject, float> consumablesFound = new Dictionary<GameObject, float>();
         public Dictionary<GameObject, float> basesFound = new Dictionary<GameObject, float>();
 
+        //The position of these things
         public GameObject targetTankPosition;
         public GameObject consumablePosition;
         public GameObject basePosition;
 
+        //For rotation and aiming
         public GameObject lookAtPosition;
-        public Vector3[] pointsColection = new Vector3[30];
+        public Vector3[] pointsColection = new Vector3[30]; //points around the tank needed for rotating
 
-        bool lowHealth;
-
-        public BTAction healthCheck;
-        public BTAction ammoCheck;
-        public BTAction targetSpottedCheck;
-        public BTAction targetReachedCheck;
-        public BTSequence regenSequence;
-
+        //Rule based system
         public Dictionary<string, bool> stats = new Dictionary<string, bool>();
         public Rules rules = new Rules();
 
-        private void Awake()
-        {
-            SpawnLookPoint();
-        }
 
         /*******************************************************************************************************      
         WARNING, do not include void Start(), use AITankStart() instead if you want to use Start method from Monobehaviour.
         *******************************************************************************************************/
+        //Initialize everything
         public override void AITankStart()
         {
             InitializeStateMachine();
@@ -50,6 +42,8 @@ namespace RGLM
         /*******************************************************************************************************       
         WARNING, do not include void Update(), use AITankUpdate() instead if you want to use Update method from Monobehaviour.
         *******************************************************************************************************/
+
+        //Get data from sensors
         public override void AITankUpdate()
         {
             targetTanksFound = GetAllTargetTanksFound;
@@ -65,9 +59,12 @@ namespace RGLM
         }
 
 
+        private void Awake()
+        {
+            SpawnLookPoint(); //Spawning an empty gameobject to point turret in certain direction
+        }
 
         //New methods section
-
         void SpawnLookPoint()
         {
             if (lookAtPosition == null)
@@ -91,13 +88,13 @@ namespace RGLM
 
         }
 
-        public void Rotate360() //Call method for turret rotation.
+        public void Rotate360() //360 turret rotation.
         {
             Calculate360Points();
             StartCoroutine("MoveSightAndWait");
         }
 
-        IEnumerator MoveSightAndWait() //Turn tank turret.
+        IEnumerator MoveSightAndWait() //Independent turret movement around the tank
         {
             for(int i = 0; i<30; i++)
             {
@@ -107,109 +104,59 @@ namespace RGLM
         }
 
 
-        //State Machine Section
+        //Placeholder for State Machine 
         void InitializeStateMachine()
         {
-            Dictionary<Type, BaseState> states = new Dictionary<Type, BaseState>();
-            states.Add(typeof(DefaultState), new DefaultState(this));
-            states.Add(typeof(RoamState), new RoamState(this));
-            states.Add(typeof(RunState), new RunState(this));
-            states.Add(typeof(AnalyzeState), new AnalyzeState(this));
-            GetComponent<StateMachine>().SetStates(states);
         }
 
-        //Rule Based Section
+        //Placeholder for Rule Based System 
         void InitializeRuleBasedSystem()
         {
-            stats.Add("lowHealth", lowHealth);
-            stats.Add("targetSpotted", false);
-            stats.Add("targetReached", false);
-            stats.Add("fleeState", false);
-            stats.Add("searchState", false);
-            stats.Add("attackState", false);
-
-            rules.AddRule(new Rule("attackState", "lowHealth", typeof(RoamState), Rule.Predicate.And));
-            rules.AddRule(new Rule("attackState", "lowHealth", typeof(RoamState), Rule.Predicate.And));
         }
 
 
-        // BT Section
+        // Placeholder for BTs
         void InitializeBehaviouralTrees()
         {
-            healthCheck = new BTAction(HealthCheck);
-            ammoCheck = new BTAction(AmmoCheck);
-            targetSpottedCheck = new BTAction(TargetSpottedCheck);
-            targetReachedCheck = new BTAction(TargetReachedCheck);
-            regenSequence = new BTSequence(new List<BTBaseNode> { healthCheck, ammoCheck });
         }
-        public BTNodeStates TargetReachedCheck()
-        {
-            throw new NotImplementedException();
-        }
-
-        public BTNodeStates TargetSpottedCheck()
-        {
-            throw new NotImplementedException();
-        }
-
-        public BTNodeStates AmmoCheck()
-        {
-            throw new NotImplementedException();
-        }
-
-        public BTNodeStates HealthCheck()
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-        //Making use of protected AITank methods
+      
+        //Rewriting protected methods with "Tank%" prefix to be able to use them. A
         public bool TankIsFiring()
         {
             return IsFiring;
         }
-
         public bool TankIsDestroyed()
         {
             return IsDestroyed;
         }
-
         public float TankGetHealthLevel()
         {
             return GetHealthLevel;
         }
-
         public float TankGetAmmoLevel()
         {
             return GetAmmoLevel;
         }
-
         public float TankGetFuelLevel()
         {
             return GetFuelLevel;
         }
-
         public List<GameObject> TankGetMyBases()
         {
             return GetMyBases;
         }
-
         public Dictionary<GameObject, float> TankGetAllTargetTanksFound()
         {
             return GetAllTargetTanksFound;
         }
-
         public Dictionary<GameObject, float> TankGetAllConsumablesFound()
         {
             return GetAllConsumablesFound;
         }
-
         public Dictionary<GameObject, float> TankGetAllBasesFound()
         {
             return GetAllBasesFound;
         }
-
         public void TankFindPathToPoint(GameObject pointInWorld)
         {
             FindPathToPoint(pointInWorld);
@@ -218,43 +165,34 @@ namespace RGLM
         {
             FollowPathToPoint(pointInWorld, normalizedSpeed);
         }
-
         public void TankFollowPathToRandomPoint(float normalizedSpeed)
         {
             FollowPathToRandomPoint(normalizedSpeed);
         }
-
         public void TankGenerateRandomPoint()
         {
             GenerateRandomPoint();
         }
-
         public void TankStopTank()
         {
             StopTank();
         }
-
         public void TankStartTank()
         {
             StartTank();
         }
-
         public void TankFaceTurretToPoint(Vector3 pointInWorld)
         {
             FaceTurretToPoint(pointInWorld);
         }
-
         public void TankResetTurret()
         {
             ResetTurret();
         }
-
         public void TankFireAtPoint(GameObject pointInWorld)
         {
             FireAtPoint(pointInWorld);
         }
-
-
     }
 }
 

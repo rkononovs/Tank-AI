@@ -1,5 +1,6 @@
 ﻿using System;
-using UnityEngine;
+
+//Gathering state - tanks goes to collectable at full speed
 
 namespace RGLM
 {
@@ -28,12 +29,12 @@ namespace RGLM
         {
             aiTank.IsCollectableNearby();
 
-            if (aiTank.stats["collectableSpotted"])
+            if (aiTank.stats["collectableSpotted"]) // If sees something 
             {
-                aiTank.TankFollowPathToPoint(aiTank.consumablePosition,1);
+                aiTank.TankFollowPathToPoint(aiTank.consumablePosition,1); //goes for it  at full speed
                 return null;
             }
-            else
+            else //Nothing in sight? take a break
                 return typeof(OBreakState);
         }
     }

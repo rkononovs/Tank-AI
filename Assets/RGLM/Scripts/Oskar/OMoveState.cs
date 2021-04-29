@@ -1,6 +1,8 @@
 ﻿using System;
 using UnityEngine;
 
+//Moving state - tank slowly moves around the map
+
 namespace RGLM
 {
     public class OMoveState : BaseState
@@ -30,12 +32,15 @@ namespace RGLM
         public override Type StateUpdate()
         {
             aiTank.IsCollectableNearby();
-            t += Time.deltaTime;
-            if (t > aiTank.breakTime*1.2f)
-                return typeof(OBreakState);
 
-            aiTank.TankFollowPathToRandomPoint(0.3f);
-            foreach(Rule rule in aiTank.rules.GetRules)
+            t += Time.deltaTime;
+            if (t > aiTank.breakTime*1.2f) // After some time
+                return typeof(OBreakState); // have a break
+
+            aiTank.TankFollowPathToRandomPoint(0.3f); // move around a little 
+
+            //Look if any of the conditions for rules is met
+            foreach (Rule rule in aiTank.rules.GetRules)
             {
                 if (rule.CheckRule(aiTank.stats) != null)
                     return rule.CheckRule(aiTank.stats);
